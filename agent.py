@@ -13,7 +13,9 @@ class Neighborhood:
         add_neighbors(agents)
 
     def determine_car_desire(self):
-        if float(num_cars) / float(num_agents) > CAR_DESIRE_THRESHOLD:
+        num_cars = reduce((lambda x, y: x + y.has_car()), agents)
+
+        if float(num_cars) / float(self.num_agents) > CAR_DESIRE_THRESHOLD:
             map((lambda x: x.desire_car()), self.agents)
 
 class Agent:

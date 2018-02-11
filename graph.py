@@ -33,10 +33,15 @@ def dijkstra(edges, f, t):
 
 
 class Node:
-    def __init__(self,  isCharge, timeCharge):
+    def __init__(self, name, isCharge)#, timeCharge):
         # assume neighbors is a [(int, Node)]
         self.isCharge = isCharge 
-        self.timeCharge = timeCharge
+        #self.timeCharge = timeCharge
+        self.name = name
+        self.visits = 0
+
+    def visit(self):
+        self.visits += 1
 
 # =============================================
 # This code is based on the code from: https://gist.github.com/econchick/4666413
@@ -72,8 +77,23 @@ class Graph:
         self.isCharge = True
 
 
+def read_graph(node_f, edge_f):
+    graph = Graph([])
 
+    with open(node_f) as f:
+        for line in f.readlines():
+            if line != '\n':
+                words = line.split(',')
+                node = Node(words[0], words[1])
+                graph.add_node(node)
 
+    with open(edge_f) as f:
+        for line in f.readlines():
+            if line != '\n':
+                words = line.split(',')
+                graph.add_edge(words[0], words[1], words[2])
+
+    return graph
 
 if __name__ == "__main__":
   n1 = Node(False, 3)
@@ -86,4 +106,3 @@ if __name__ == "__main__":
   g.add_edge(n2, n3, 5)
   g.add_edge(n1, n3, 20)
   assert (g.distance(n1,n3) == 6)
-
