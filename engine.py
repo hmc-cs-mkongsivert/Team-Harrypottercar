@@ -11,10 +11,11 @@ PROB_WANT_CAR = .01
 parser = argparse.ArgumentParser(description="process graph and station function")
 parser.add_argument('nodes', metavar='NODES', type=str, help='Path to node file')
 parser.add_argument('edges', metavar='EDGES', type=str, help='Path to edge file')
+parser.add_argument('cities', metavar='CITIES', type=str, help='Path to cities file')
 parser.add_argument('place_func', metavar='PLACEFUNC', type=str, help='Path to placement function file')
 args = parser.parse_args()
 
-graph, cities = graph.read_graph(args[nodes], args[edges])
+graph, cities = graph.read_graph(args[nodes], args[edges], args[cities])
 
 neighborhoods = {}
 work_areas = {}
@@ -121,3 +122,8 @@ num_cars = reduce((lambda x, y: x + y.has_car()), agentList)
 car_ratio = float(cars) / float(NUM_AGENTS)
 num_want_cars = reduce((lambda x, y: x + y.wants_car), agentList)
 num_didnt_get_car = num_cars - num_want_cars
+
+print num_cars
+print car_ratio
+print num_want_cars
+print num_didnt_get_car
