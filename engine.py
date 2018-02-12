@@ -40,20 +40,31 @@ for i in range(NUM_AGENTS):
     work_areas[work].append(agent)
 
 	for j in range(5):
-		#start at home
-		#go to work
+		#start at home and then go to work
+        weekday = [home, work]
+        
 		numDest = random.randrange(1, 5)
 		for k in range(numDest):
-			pass
-			#create random destinations in graph
-		#return home
+            #assign a random node in the graph to be a destination
+			randIndex = random.randrange(0, len(graph.nodes) - 1)
+            weekday.append(graph.nodes[randIndex])
+			
+        #return home
+		weekday.append(home)
+        schedule += weekday
 	for j in range(2): #weekend
 		#start at home
+        weekend = [home]
+
 		numDest = random.randrange(1, 10)
 		for k in range(numDest):
-			pass
 			#create random destinations in graph
+            randIndex = random.randrange(0, len(graph.nodes) - 1)
+            weekend.append(graph.nodes[randIndex])
+
 		#return home
+        weekend.append(home)
+        schedule += weekend
 
     agent = Agent(schedule)
 
