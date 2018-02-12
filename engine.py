@@ -32,8 +32,8 @@ for node in graph:
 #create agents
 agentList = []
 for i in range(NUM_AGENTS):
-	#set home to be current node
-	#assign random nodes work
+    #set home to be current node
+    #assign random nodes work
     schedule = []
     
     # Randomly set home and work (might be same neighborhood)
@@ -46,26 +46,26 @@ for i in range(NUM_AGENTS):
     work = city_dict[home_city][work_index]
     work_areas[work].append(agent)
 
-	for j in range(5):
-		#start at home and then go to work
+    for j in range(5):
+        #start at home and then go to work
         weekday = [home, work]
         
-		numDest = random.randrange(1, 5)
-		for k in range(numDest):
+        numDest = random.randrange(1, 5)
+        for k in range(numDest):
             #assign a random node in the graph to be a destination
-			randIndex = random.randrange(0, len(city_dict[home_city]) - 1)
+            randIndex = random.randrange(0, len(city_dict[home_city]) - 1)
             weekday.append(city_dict[home_city][randIndex])
-			
+            
         #return home
-		weekday.append(home)
+        weekday.append(home)
         schedule += weekday
-	for j in range(2): #weekend
-		#start at home
+    for j in range(2): #weekend
+        #start at home
         weekend = [home]
 
-		numDest = random.randrange(1, 10)
-		for k in range(numDest):
-			#create random destinations in graph
+        numDest = random.randrange(1, 10)
+        for k in range(numDest):
+            #create random destinations in graph
             if (random.randrange(1, 10) == 1):
                 #1/10 of the time, go out of town
                 randIndex = random.randrange(0, len(graph.nodes))
@@ -74,7 +74,7 @@ for i in range(NUM_AGENTS):
                 randIndex = random.randrange(0, len(city_dict[home_city]) - 1)
                 weekend.append(city_dict[home_city][randIndex])
 
-		#return home
+        #return home
         weekend.append(home)
         schedule += weekend
 
