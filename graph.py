@@ -37,7 +37,10 @@ class Node:
         # assume neighbors is a [(int, Node)]
         self.name = name
         self.isCharge = isCharge == 'True'
-        self.timeCharge = int(timeCharge)
+
+        if timeCharge != "inf":
+            self.timeCharge = int(timeCharge)
+
         self.visits = 0
 
     def visit(self):
@@ -125,20 +128,20 @@ def read_graph(node_f, edge_f, city_f):
     with open(node_f) as f:
         for line in f.readlines():
             if line != '\n':
-                words = line.split(',')
+                words = line.split(', ')
                 node = Node(words[0], words[1])
                 graph.add_node(node)
 
     with open(edge_f) as f:
         for line in f.readlines():
             if line != '\n':
-                words = line.split(',')
+                words = line.split(', ')
                 graph.add_edge(words[0], words[1], words[2])
 
     with open(city_f) as f:
         for line in f.readlines():
             if line != '\n':
-                words = line.split(',')
+                words = line.split(', ')
                 city = word[0]
                 cities.append(city)
                 

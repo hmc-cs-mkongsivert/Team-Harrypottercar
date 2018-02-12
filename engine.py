@@ -12,7 +12,6 @@ parser = argparse.ArgumentParser(description="process graph and station function
 parser.add_argument('nodes', metavar='NODES', type=str, help='Path to node file')
 parser.add_argument('edges', metavar='EDGES', type=str, help='Path to edge file')
 parser.add_argument('cities', metavar='CITIES', type=str, help='Path to cities file')
-parser.add_argument('place_func', metavar='PLACEFUNC', type=str, help='Path to placement function file')
 args = parser.parse_args()
 
 graph, cities = graph.read_graph(args[nodes], args[edges], args[cities])
@@ -35,15 +34,15 @@ agentList = []
 for i in range(NUM_AGENTS):
 	#set home to be current node
 	#assign random nodes work
-	schedule = []
-
+    schedule = []
+    
     # Randomly set home and work (might be same neighborhood)
-    home_index = random.range(0, num_nodes)
+    home_index = random.randrange(0, num_nodes)
     home = graph.nodes[home_index]
     neighborhoods[home].append(agent)
 
     home_city = home.city
-    work_index = random.range(0, len(city_dict[home_city]) - 1)
+    work_index = random.randrange(0, len(city_dict[home_city]) - 1)
     work = city_dict[home_city][work_index]
     work_areas[work].append(agent)
 
