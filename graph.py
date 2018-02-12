@@ -33,11 +33,12 @@ def dijkstra(edges, f, t):
 
 
 class Node:
-    def __init__(self, name, isCharge, timeCharge):
+    def __init__(self, name, city, isCharge, timeCharge):
         # assume neighbors is a [(int, Node)]
-        self.isCharge = isCharge 
-        #self.timeCharge = timeCharge
         self.name = name
+        self.city = city
+        self.isCharge = isCharge == 'True'
+        self.timeCharge = int(timeCharge)
         self.visits = 0
 
     def visit(self):
@@ -50,6 +51,12 @@ class Node:
         visits = self.visits
         self.visits = 0
         return visits
+
+    def get_name(self):
+        return self.name
+
+    def get_city(self):
+        return self.city
 
 # =============================================
 # This code is based on the code from: https://gist.github.com/econchick/4666413
@@ -125,12 +132,12 @@ def read_graph(node_f, edge_f):
                 words = line.split(',')
                 graph.add_edge(words[0], words[1], words[2])
 
-    return graph
+    return graph, cities
 
 if __name__ == "__main__":
-    n1 = Node('a', False, 3)
-    n2 = Node('b', True, 0)
-    n3 = Node('c', False, 2)
+    n1 = Node('a', 'city1', False, 3)
+    n2 = Node('b', 'city2', True, 0)
+    n3 = Node('c', 'city3', False, 2)
     
     g = Graph([n1,n2,n3])
     g.add_edge(n1, n2, 1)

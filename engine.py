@@ -14,7 +14,7 @@ parser.add_argument('edges', metavar='EDGES', type=str, help='Path to edge file'
 parser.add_argument('place_func', metavar='PLACEFUNC', type=str, help='Path to placement function file')
 args = parser.parse_args()
 
-graph = graph.read_graph(args[nodes], args[edges])
+graph, cities = graph.read_graph(args[nodes], args[edges])
 
 neighborhoods = {}
 work_areas = {}
