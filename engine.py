@@ -19,11 +19,16 @@ graph, cities = graph.read_graph(args[nodes], args[edges], args[cities])
 
 neighborhoods = {}
 work_areas = {}
+city_dict = {}
 num_nodes = len(graph.nodes)
 
 for node in graph:
     neighborhood[node] = []
     work_areas[node] = []
+    if node.city in city_dict:
+        city_dict[node.city].append(node)
+    else:
+        city_dict[node.city] = [node]
 
 #create agents
 agentList = []
@@ -36,8 +41,10 @@ for i in range(NUM_AGENTS):
     home_index = random.range(0, num_nodes)
     home = graph.nodes[home_index]
     neighborhoods[home].append(agent)
-    work_index = random.range(0, num_nodes)
-    work = graph.nodes[work_index]
+
+    home_city = home.city
+    work_index = random.range(0, len(city_dict[home_city]) - 1)
+    work = city_dict[home_city][work_index]
     work_areas[work].append(agent)
 
 	for j in range(5):
@@ -47,8 +54,8 @@ for i in range(NUM_AGENTS):
 		numDest = random.randrange(1, 5)
 		for k in range(numDest):
             #assign a random node in the graph to be a destination
-			randIndex = random.randrange(0, len(graph.nodes) - 1)
-            weekday.append(graph.nodes[randIndex])
+			randIndex = random.randrange(0, len(city_dict[home_city]) - 1)
+            weekday.append(city_dict[home_city][randIndex])
 			
         #return home
 		weekday.append(home)
@@ -60,8 +67,13 @@ for i in range(NUM_AGENTS):
 		numDest = random.randrange(1, 10)
 		for k in range(numDest):
 			#create random destinations in graph
-            randIndex = random.randrange(0, len(graph.nodes) - 1)
-            weekend.append(graph.nodes[randIndex])
+            if (random.randrange(1, 10) == 1):
+                #1/10 of the time, go out of town
+                randIndex = random.randrange(0, len(graph.nodes))
+                weekend.append(graph.nodes[randIndex])
+            else:
+                randIndex = random.randrange(0, len(city_dict[home_city]) - 1)
+                weekend.append(city_dict[home_city][randIndex])
 
 		#return home
         weekend.append(home)
