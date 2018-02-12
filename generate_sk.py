@@ -2,9 +2,9 @@
 
 import random
 
-PROB_START_STATION = .05
-PROB_FUT_STATION = .2
-NUM_WEEKS = 100
+PROB_START_STATION = .0025
+PROB_FUT_STATION = .05
+NUM_WEEKS = 52
 
 def main():
     cities = []
@@ -57,7 +57,7 @@ def main():
 
     # Square numbers
     squares = get_nearest_squares(cities)
-    edge_dist = str(1)
+    edge_dist = str(6)
 
     # Generate files
     city_nodes, counter = make_nodes(cities, squares)
