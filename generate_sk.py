@@ -2,8 +2,8 @@
 
 import random
 
-PROB_START_STATION = .4
-PROB_FUT_STATION = .9
+PROB_START_STATION = .05
+PROB_FUT_STATION = .2
 NUM_WEEKS = 100
 
 def main():

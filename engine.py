@@ -8,7 +8,7 @@ import multiprocessing
 from multiprocessing import Pool
 
 NUM_AGENTS = 4000
-NUM_WEEKS = 50
+NUM_WEEKS = 10
 PROB_WANT_CAR = .01
 
 def execute_agent_loop(this_agent, graph):
