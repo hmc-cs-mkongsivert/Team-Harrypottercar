@@ -97,18 +97,18 @@ def main():
                 to_node = cities[to_city]
                 dist = edges[city[0]][j]
 
-                for k in range(dist / 10 + 1):
+                for k in range(dist / 30 + 1):
                     name = str(counter)
                     prev = str(counter - 1)
                     counter += 1
 
                     if k != 0:
-                        edge_f.write(name + ", " + prev + ", " + str(10) + "\n")
+                        edge_f.write(name + ", " + prev + ", " + str(30) + "\n")
                     else:
                         ind_1 = random.randrange(0, len(nodes)-1)
                         ind_2 = random.randrange(0, len(nodes[ind_1])-1)
 
-                        edge_f.write(name + ", " + nodes[ind_1][ind_2][0] + ", " + str(10) + "\n")
+                        edge_f.write(name + ", " + nodes[ind_1][ind_2][0] + ", " + str(30) + "\n")
 
                     time = "inf"
                     is_station = "False"                    
@@ -122,10 +122,10 @@ def main():
 
                     road_string += ", " + name
 
-                    if k == dist / 10:
+                    if k == dist / 30:
                         ind_1 = random.randrange(0, len(city_nodes[to_node]) -1)
                         ind_2 = random.randrange(0, len(city_nodes[to_node][ind_1])-1)
-                        edge_f.write(name + ", " + city_nodes[to_node][ind_1][ind_2][0] + ", " + str(10) + "\n")
+                        edge_f.write(name + ", " + city_nodes[to_node][ind_1][ind_2][0] + ", " + str(30) + "\n")
 
         city_f.write(road_string + "\n")
             
@@ -148,9 +148,9 @@ def get_nearest_squares(cities):
                 break
 
         if area - last > this - area:
-            squares[name] = this
+            squares[name] = this/6
         else:
-            squares[name] = last
+            squares[name] = last/6
 
     return squares
 

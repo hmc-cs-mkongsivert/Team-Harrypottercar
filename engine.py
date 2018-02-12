@@ -7,8 +7,8 @@ from joblib import Parallel, delayed
 import multiprocessing
 from multiprocessing import Pool
 
-NUM_AGENTS = 60
-NUM_WEEKS = 100
+NUM_AGENTS = 4000
+NUM_WEEKS = 50
 PROB_WANT_CAR = .01
 
 def execute_agent_loop(this_agent, graph):
@@ -25,7 +25,7 @@ parser.add_argument('edges', metavar='EDGES', type=str, help='Path to edge file'
 parser.add_argument('cities', metavar='CITIES', type=str, help='Path to cities file')
 args = parser.parse_args()
 
-p = Pool(NUM_AGENTS)
+p = Pool(200)
 
 graph, cities = graph.read_graph(args.nodes, args.edges, args.cities)
 

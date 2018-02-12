@@ -107,8 +107,8 @@ class Graph:
         return cost
 
     def path(self, initial, final):
-        if (initial, final) in stored_paths:
-            return stored_paths[(initial, final)]
+        if (initial, final) in self.stored_paths:
+            return self.stored_paths[(initial, final)]
         else:
             cost, path = dijkstra(self.edgeList, initial, final)   
             ret = []
@@ -118,7 +118,7 @@ class Graph:
                 ret.append(path[0])
                 path = path[1]
 
-            stored_paths[(initial, final)] = ret
+            self.stored_paths[(initial, final)] = ret
             return ret
 
     def update(self):
