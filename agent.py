@@ -1,8 +1,8 @@
 import graph
 from functools import reduce
 
-CAR_DESIRE_THRESHOLD = 0.7
-MAX_TANK = 100
+CAR_DESIRE_THRESHOLD = 0.4
+MAX_TANK = 250 # Tesla miles per charge
 
 class Neighborhood:
     def __init__(self, agents):
@@ -35,15 +35,17 @@ class Agent:
         can_buy_car = True
 
         for dest in self.sched[1:]:
-            if graph.distance(loc, dest) > self.tank:
-                can_buy_car = False
+            path = graph.path(loc, dest)
 
-            # TODO: Currently assumes it stops everywhere
-            if dest.is_station:
-                self.refuel()
-                dest.visit()
-            else:
-                self.travel(loc, dest)
+            for node in path:
+                if graph.get_edge(loc, dest) > self.tank:
+                    can_buy_car = False
+
+                # TODO: Currently assumes it stops everywhere
+                if dest.visit():
+                    self.refuel()
+                else:
+                    self.travel(loc, dest) # Deduct fuel
 
             loc = dest
 

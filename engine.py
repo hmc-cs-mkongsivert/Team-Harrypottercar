@@ -76,5 +76,16 @@ for node in work_areas.keys():
 
 # Run actual simulation
 for i in range(NUM_WEEKS):
+    graph.update()
+
     for agent in agentList:
+        # Some agents spontaneously want cars
+        if random.random() < PROB_WANT_CAR:
+            agent.desire_car()
+
         agent.execute_sched()
+
+    graph.clear_all_visits()
+
+# statistics
+cars = reduce((lambda x, y: x + y.has_car()), agentList)
