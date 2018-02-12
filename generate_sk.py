@@ -2,8 +2,8 @@
 
 import random
 
-PROB_START_STATION = .1
-PROB_FUT_STATION = .2
+PROB_START_STATION = .4
+PROB_FUT_STATION = .9
 NUM_WEEKS = 100
 
 def main():
@@ -113,10 +113,10 @@ def main():
                     time = "inf"
                     is_station = "False"                    
 
-                    if random.random() < PROB_FUT_STATION:
-                        time = str(random.randrange(1, NUM_WEEKS))
-                    elif random.random() < PROB_START_STATION:
+                    if random.random() < PROB_START_STATION:
                         is_station = "True"
+                    elif random.random() < PROB_FUT_STATION:
+                        time = str(random.randrange(1, NUM_WEEKS))
                     
                     node_f.write(name + ", " + time + ", " + is_station + "\n")
 
@@ -171,10 +171,10 @@ def make_nodes(cities, squares):
                 time = "inf"
                 is_station = "False"                    
 
-                if random.random() < PROB_FUT_STATION:
-                    time = str(random.randrange(1, NUM_WEEKS))
-                elif random.random() < PROB_START_STATION:
+                if random.random() < PROB_START_STATION:
                     is_station = "True"
+                elif random.random() < PROB_FUT_STATION:
+                    time = str(random.randrange(1, NUM_WEEKS))
 
                 node_row.append((name, time, is_station))
 

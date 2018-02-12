@@ -1,7 +1,8 @@
 from collections import defaultdict
+import pdb
 from heapq import *
 
-MAX_VISITS_PER_WEEK = 100
+MAX_VISITS_PER_WEEK = 1000000000000000
 
 # ==================================================
 # Stolen from : https://gist.github.com/kachayev/5990802
@@ -13,18 +14,19 @@ def dijkstra(edges, f, t):
     for l,r,c in edges:
         g[l].append((c,r))
 
-    q, seen = [(0,f,())], set()
+    q, seen = [(0,f.name,())], set()
     while q:
         (cost,v1,path) = heappop(q)
         if v1 not in seen:
             seen.add(v1)
             path = (v1, path)
-            if v1 == t: return (cost, path)
+            if v1 == t.name: return (cost, path)
 
             for c, v2 in g.get(v1, ()):
                 if v2 not in seen:
                     heappush(q, (cost+c, v2, path))
 
+    print "fuck"
     return float("inf")
 
 # ==========================
@@ -36,10 +38,12 @@ class Node:
     def __init__(self, name, isCharge, timeCharge):
         # assume neighbors is a [(int, Node)]
         self.name = name
-        self.isCharge = isCharge == 'True'
+        self.isCharge = isCharge[0:len(isCharge)-1] == 'True'
 
         if timeCharge != "inf":
             self.timeCharge = int(timeCharge)
+        else:
+            self.timeCharge = float("inf")
 
         self.visits = 0
 
@@ -75,20 +79,28 @@ class Graph:
         self.time = 0  
 
     def add_node(self, value):
-        self.nodes.add(value)
+        self.nodes.append(value) # TODO this was add...
 
     def add_edge(self, from_node, to_node, distance):
+        print distance
         self.edges[from_node].append((to_node, distance))
         self.edges[to_node].append((from_node, distance))
         self.edgeList += [(from_node, to_node, distance)]
         self.edgeList += [(to_node, from_node, distance)]
 
     def get_edge(self, from_node, to_node):
-        for edge in self.edges[from_node]:
+        for edge in self.edges[from_node.name]:
             if edge[0] == to_node:
-                return distance
+                return edge[1]
 
         return float("inf")
+
+    def get_node(self, name):
+        for node in self.nodes:
+            if node.name == name:
+                return node
+
+        return None
 
     def distance(self, initial, final):
         cost, path = dijkstra(self.edgeList, initial, final)   
@@ -109,8 +121,8 @@ class Graph:
         self.time += 1
 
         for n in self.nodes:
-            if (not self.isCharge) and (n.timeCharge >= self.time):
-                self.isCharge = True
+            if (not n.isCharge) and (n.timeCharge >= self.time):
+                n.isCharge = True
 
     def clear_all_visits(self):
         visits = {}
@@ -129,24 +141,26 @@ def read_graph(node_f, edge_f, city_f):
         for line in f.readlines():
             if line != '\n':
                 words = line.split(', ')
-                node = Node(words[0], words[1])
+                node = Node(words[0], words[2], words[1])
                 graph.add_node(node)
 
     with open(edge_f) as f:
         for line in f.readlines():
             if line != '\n':
                 words = line.split(', ')
-                graph.add_edge(words[0], words[1], words[2])
+                graph.add_edge(words[0], words[1], int(words[2][:len(words[2])-1]))
 
     with open(city_f) as f:
         for line in f.readlines():
             if line != '\n':
                 words = line.split(', ')
-                city = word[0]
+                city = words[0]
                 cities.append(city)
                 
                 for node in words[1:]:
-                    node.set_city(city)
+                    if node[-1] == "\n":
+                        node = node[:len(node)-1]
+                    graph.get_node(node).set_city(city)
 
     return graph, cities
 
