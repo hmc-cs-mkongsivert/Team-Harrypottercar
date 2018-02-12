@@ -125,7 +125,7 @@ class Graph:
         self.time += 1
 
         for n in self.nodes:
-            if (not n.isCharge) and (n.timeCharge >= self.time):
+            if (not n.isCharge) and (n.timeCharge <= self.time):
                 n.isCharge = True
 
     def clear_all_visits(self):

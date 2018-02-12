@@ -2,9 +2,9 @@
 
 import random
 
-PROB_START_STATION = .0025
-PROB_FUT_STATION = .05
-NUM_WEEKS = 52
+PROB_START_STATION = .05
+PROB_FUT_STATION = .1
+NUM_WEEKS = 20
 
 def main():
     cities = []
