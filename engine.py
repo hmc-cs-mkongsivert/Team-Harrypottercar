@@ -85,7 +85,16 @@ for i in range(NUM_WEEKS):
 
         agent.execute_sched()
 
+    # Neighborhood influence on desire to buy a car
+    for node in neighborhoods.keys():
+        neighborhoods[node].determine_car_desire()
+    for node in work_areas.keys():
+        work_areas[node].determine_car_desire()
+
     graph.clear_all_visits()
 
 # statistics
-cars = reduce((lambda x, y: x + y.has_car()), agentList)
+num_cars = reduce((lambda x, y: x + y.has_car()), agentList)
+car_ratio = float(cars) / float(NUM_AGENTS)
+num_want_cars = reduce((lambda x, y: x + y.wants_car), agentList)
+num_didnt_get_car = num_cars - num_want_cars
