@@ -33,10 +33,9 @@ def dijkstra(edges, f, t):
 
 
 class Node:
-    def __init__(self, name, city, isCharge, timeCharge):
+    def __init__(self, name, isCharge, timeCharge):
         # assume neighbors is a [(int, Node)]
         self.name = name
-        self.city = city
         self.isCharge = isCharge == 'True'
         self.timeCharge = int(timeCharge)
         self.visits = 0
@@ -51,6 +50,9 @@ class Node:
         visits = self.visits
         self.visits = 0
         return visits
+
+    def set_city(self, city):
+        self.city = city
 
     def get_name(self):
         return self.name
@@ -116,8 +118,9 @@ class Graph:
         return visits
 
 
-def read_graph(node_f, edge_f):
+def read_graph(node_f, edge_f, city_f):
     graph = Graph([])
+    cities = []
 
     with open(node_f) as f:
         for line in f.readlines():
@@ -131,6 +134,16 @@ def read_graph(node_f, edge_f):
             if line != '\n':
                 words = line.split(',')
                 graph.add_edge(words[0], words[1], words[2])
+
+    with open(city_f) as f:
+        for line in f.readlines():
+            if line != '\n':
+                words = line.split(',')
+                city = word[0]
+                cities.append(city)
+                
+                for node in words[1:]:
+                    node.set_city(city)
 
     return graph, cities
 
