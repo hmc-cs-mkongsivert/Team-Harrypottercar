@@ -3,10 +3,20 @@ import random
 import argparse
 import graph
 import agent
+from joblib import Parallel, delayed
+import multiprocessing
 
-NUM_AGENTS = 700
+NUM_AGENTS = 2
 NUM_WEEKS = 100
 PROB_WANT_CAR = .01
+
+def execute_agent_loop(this_agent, graph):
+    # Some agents spontaneously want cars
+    if random.random() < PROB_WANT_CAR:
+        this_agent.desire_car()
+
+    this_agent.execute_sched(graph)
+    
 
 parser = argparse.ArgumentParser(description="process graph and station function")
 parser.add_argument('nodes', metavar='NODES', type=str, help='Path to node file')
@@ -108,12 +118,16 @@ for i in range(NUM_WEEKS):
     print i
     graph.update()
 
-    for this_agent in agentList:
-        # Some agents spontaneously want cars
-        if random.random() < PROB_WANT_CAR:
-            this_agent.desire_car()
+    Parallel(n_jobs=NUM_AGENTS)(delayed(execute_agent_loop)(this_agent, graph) for agent in agentList)
 
-        this_agent.execute_sched(graph)
+    #jobs = []
+    #for j in range(NUM_AGENTS):
+    #    p = multiprocessing.Process(target=execute_agent_loop, args=(agentList[j], graph))
+    #    jobs.append(p)
+    #    p.start()
+
+    #for job in jobs:
+    #    job.join()
 
     # Neighborhood influence on desire to buy a car
     for node in neighborhoods.keys():

@@ -82,7 +82,6 @@ class Graph:
         self.nodes.append(value) # TODO this was add...
 
     def add_edge(self, from_node, to_node, distance):
-        print distance
         self.edges[from_node].append((to_node, distance))
         self.edges[to_node].append((from_node, distance))
         self.edgeList += [(from_node, to_node, distance)]
