@@ -5,8 +5,9 @@ import graph
 import agent
 from joblib import Parallel, delayed
 import multiprocessing
+from multiprocessing import Pool
 
-NUM_AGENTS = 2
+NUM_AGENTS = 60
 NUM_WEEKS = 100
 PROB_WANT_CAR = .01
 
@@ -23,6 +24,8 @@ parser.add_argument('nodes', metavar='NODES', type=str, help='Path to node file'
 parser.add_argument('edges', metavar='EDGES', type=str, help='Path to edge file')
 parser.add_argument('cities', metavar='CITIES', type=str, help='Path to cities file')
 args = parser.parse_args()
+
+p = Pool(NUM_AGENTS)
 
 graph, cities = graph.read_graph(args.nodes, args.edges, args.cities)
 
@@ -118,7 +121,9 @@ for i in range(NUM_WEEKS):
     print i
     graph.update()
 
-    Parallel(n_jobs=NUM_AGENTS)(delayed(execute_agent_loop)(this_agent, graph) for agent in agentList)
+    #Parallel(n_jobs=NUM_AGENTS)(delayed(execute_agent_loop)(this_agent, graph) for agent in agentList)
+
+    map((lambda x: execute_agent_loop(x, graph)), agentList)
 
     #jobs = []
     #for j in range(NUM_AGENTS):

@@ -49,7 +49,7 @@ class Node:
 
     def visit(self):
         if self.visits < MAX_VISITS_PER_WEEK:
-            self.visits += 1
+            #self.visits += 1
             return True
         return False
 
