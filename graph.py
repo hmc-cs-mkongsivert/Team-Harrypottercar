@@ -76,7 +76,8 @@ class Graph:
         self.nodes = nodes #set()
         self.edges = defaultdict(list)
         self.edgeList = []
-        self.time = 0  
+        self.time = 0
+        self.stored_paths = {}  
 
     def add_node(self, value):
         self.nodes.append(value) # TODO this was add...
@@ -106,15 +107,19 @@ class Graph:
         return cost
 
     def path(self, initial, final):
-        cost, path = dijkstra(self.edgeList, initial, final)   
-        ret = []
+        if (initial, final) in stored_paths:
+            return stored_paths[(initial, final)]
+        else:
+            cost, path = dijkstra(self.edgeList, initial, final)   
+            ret = []
 
-        # Make path an actual list
-        while path != ():
-            ret.append(path[0])
-            path = path[1]
+            # Make path an actual list
+            while path != ():
+                ret.append(path[0])
+                path = path[1]
 
-        return ret
+            stored_paths[(initial, final)] = ret
+            return ret
 
     def update(self):
         self.time += 1
