@@ -6,11 +6,35 @@ num_cars_list += [0, 0, 114, 150, 203, 246, 286, 324, 369, 403, 439, 470, 506, 5
 num_charge_list = []
 time = list(range(53))*3
 
+a = [0, 327,462, 578, 676, 775, 901, 1045, 1272, 1660]
+a += [0, 346, 456, 573, 676, 775, 884, 998, 117, 1373]
+a += [0, 329, 430, 531, 631, 712, 832, 960, 1146, 1457]
+a_time = list(range(10))*3
+
+orig_x = "Number of Iterations"
+orig_y = "Number of Car Owners"
+
+# held start time at probability of .1
+const_start_ratio = [1, .323, .4465, .309]
+const_start_didnt_get = [0, 371, 541, 344]
+const_start_futs = [.9, .7, .5, .3]
+
+const_start_x = "Probability of Future Station Placement"
+const_start_rat_y = "Proportion of Individuals with an Electric Car"
+const_start_didnt_get_y = "Number of Individuals Desiring an Electric Car Without One"
+
+# held prob of future time at probability .3
+const_fut_ratio = [.43375, .4016, .36425, .38375, .42075]
+const_fut_didnt_get = [813, 720, 634, 532, 626]
+const_fut_starts = [.01, .05, .1, .2, .3]
+
+const_fut_x = "Probability of Initial Station Placement"
+
 fig = plt.figure()
 cars = fig.add_subplot(111)
-cars.scatter(time, num_cars_list)
+cars.scatter(a_time, a)
 
-cars.set_xlabel('Number of Iterations').set_fontsize(20)
-cars.set_ylabel('Number of Car Owners').set_fontsize(20)
+cars.set_xlabel(orig_x).set_fontsize(20)
+cars.set_ylabel(orig_y).set_fontsize(20)
 
 plt.show()

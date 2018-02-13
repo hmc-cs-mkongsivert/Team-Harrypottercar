@@ -9,7 +9,7 @@ from multiprocessing import Pool
 
 NUM_AGENTS = 4000
 NUM_WEEKS = 10
-PROB_WANT_CAR = .01
+PROB_WANT_CAR = .03
 
 def execute_agent_loop(this_agent, graph):
     # Some agents spontaneously want cars
@@ -142,13 +142,14 @@ for i in range(NUM_WEEKS):
 
     graph.clear_all_visits()
 
-# statistics
-num_cars = sum(map((lambda x: int(x.has_car)), agentList))
-car_ratio = float(num_cars) / float(NUM_AGENTS)
-num_want_cars = sum(map((lambda x: int(x.wants_car)), agentList))
-num_didnt_get_car = num_want_cars - num_cars
-
-print num_cars
-print car_ratio
-print num_want_cars
-print num_didnt_get_car
+    # statistics
+    num_cars = sum(map((lambda x: int(x.has_car)), agentList))
+    car_ratio = float(num_cars) / float(NUM_AGENTS)
+    num_want_cars = sum(map((lambda x: int(x.wants_car)), agentList))
+    num_didnt_get_car = num_want_cars - num_cars
+    
+    print "res"
+    print num_cars
+    print car_ratio
+    print num_want_cars
+    print num_didnt_get_car

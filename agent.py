@@ -3,7 +3,7 @@ import pdb
 from functools import reduce
 
 CAR_DESIRE_THRESHOLD = 0.4
-MAX_TANK = 400 # Tesla miles per charge
+MAX_TANK = 50 # Tesla miles per charge
 
 class Neighborhood:
     def __init__(self, agents):
